@@ -75,7 +75,7 @@ char msg[20];
 uint32_t numTicks;
 int currentAlcohol;
 int currentDistance;
-
+char c;
 int getAlcohol(int n){
 	HAL_ADC_Start(&hadc1);
 		  HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
@@ -86,6 +86,7 @@ int getAlcohol(int n){
 		  HAL_Delay(100);
 		  return raw;
 }
+
 
 float getDistance(){
 	 HAL_GPIO_WritePin(Trig_GPIO_Port, Trig_Pin, GPIO_PIN_RESET);
@@ -108,6 +109,16 @@ float getDistance(){
 		  HAL_UART_Transmit(&huart2, (uint8_t *)uartBuf, strlen(uartBuf), 100);
 		  HAL_Delay(100);
 		  return distance;
+}
+
+
+void exit(){
+	HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
+		htim2.Instance->CCR1 = 112;
+		HAL_Delay(4000);
+		htim2.Instance->CCR1 = 35;
+		HAL_Delay(1000);
+		HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
 }
 
 void openDoor(){
@@ -174,7 +185,11 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  if(HAL_UART_Receive_IT(&huart1, &c, 1) == HAL_OK){
+		  	  if(c == 'd'){
+		  		  exit();
+		  	  }
+	  }
     /* USER CODE BEGIN 3 */
 	  currentAlcohol = getAlcohol(alcoholStart);
 	  currentDistance = getDistance();

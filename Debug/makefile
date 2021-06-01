@@ -28,34 +28,34 @@ endif
 
 -include ../makefile.defs
 
-BUILD_ARTIFACT_NAME := st1
+BUILD_ARTIFACT_NAME := CleanHand
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME).$(BUILD_ARTIFACT_EXTENSION)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-st1.elf \
+CleanHand.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-st1.list \
+CleanHand.list \
 
 OBJCOPY_BIN += \
-st1.bin \
+CleanHand.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: st1.elf secondary-outputs
+main-build: CleanHand.elf secondary-outputs
 
 # Tool invocations
-st1.elf: $(OBJS) $(USER_OBJS) C:\Users\thunt\STM32CubeIDE\project\st1\STM32F401RETX_FLASH.ld
-	arm-none-eabi-gcc -o "st1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\thunt\STM32CubeIDE\project\st1\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="st1.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CleanHand.elf: $(OBJS) $(USER_OBJS) C:\Users\thunt\STM32CubeIDE\project\st1\STM32F401RETX_FLASH.ld
+	arm-none-eabi-gcc -o "CleanHand.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\thunt\STM32CubeIDE\project\st1\STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CleanHand.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -64,13 +64,13 @@ default.size.stdout: $(EXECUTABLES)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-st1.list: $(EXECUTABLES)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "st1.list"
+CleanHand.list: $(EXECUTABLES)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "CleanHand.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-st1.bin: $(EXECUTABLES)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "st1.bin"
+CleanHand.bin: $(EXECUTABLES)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "CleanHand.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

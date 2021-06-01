@@ -35,7 +35,10 @@ BLYNK_WRITE(V5)
 {
   int pinValue = param.asInt();
   if(pinValue == 1 && toggle == 0){
-    if(peopleCount>0){ peopleCount--;}
+    if(peopleCount>0){ 
+      peopleCount--;
+      Serial.write('d');
+      }
     toggle = 1;
     Blynk.virtualWrite(V3,peopleCount);
     }
@@ -62,7 +65,7 @@ void sensorDataSend()
 {
   if (Serial.available()) {
    char in = Serial.read();
-   Serial.write(in);
+   
    if(in == 'o'){
     doorState = 1;
     Blynk.virtualWrite(V2,doorState);
@@ -78,7 +81,6 @@ void sensorDataSend()
   
    }
 }
-
 
 
 void loop(){
